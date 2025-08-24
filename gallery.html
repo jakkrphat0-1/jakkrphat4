@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ค่ายภาษาอังกฤษ - โรงเรียนตัวอย่าง</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    section{padding:80px 20px;max-width:1200px;margin:auto;}
+h2.section-title{text-align:center;font-size:2rem;margin-bottom:40px;color:#2563eb;position:relative;}
+h2.section-title::after{content:'';display:block;width:80px;height:4px;background:#facc15;margin:10px auto 0;border-radius:2px;}
+
+    .courses,.news,.activities{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+.card{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s, box-shadow 0.3s;cursor:pointer;}
+.card:hover{transform:translateY(-5px);box-shadow:0 6px 16px rgba(0,0,0,0.2);}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:15px;}
+.card h3{margin-bottom:10px;color:#2563eb;}
+.card p{color:#555;}
+
+body{font-family:'Kanit',sans-serif;background:#f9fafb;color:#333;margin:0;}
+header{background:#2563eb;color:white;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;}
+header h1{font-size:1.8rem;margin:0;}
+.content{max-width:900px;margin:40px auto;padding:20px;}
+h2{color:#2563eb;font-size:2rem;margin-bottom:20px;}
+img{width:100%;border-radius:10px;margin-bottom:20px;}
+.back-btn{display:inline-block;margin-top:20px;padding:10px 20px;background:#2563eb;color:white;border-radius:10px;text-decoration:none;}
+.back-btn:hover{background:#1e40af;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>โรงเรียนตัวอย่าง</h1>
+  <a href="index1.html" style="color:white;text-decoration:none;">ย้อนกลับหน้าแรก</a>
+</header>
+<section id="news">
+  <h2 class="section-title">กิจกรรมและแกลเลอรี่</h2>
+  <div class="news">
+    <div class="card"><img src="https://scontent.fbkk3-3.fna.fbcdn.net/v/t39.30808-6/532208549_764818449765614_1564806399104870166_n.jpg?stp=dst-jpg_p526x395_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=QkjlBpP5XPAQ7kNvwGDjwlx&_nc_oc=AdkQJkG5AyuIf-F072uqWC33KFHK6bjPjHrp0ixKyAZ0l8CIzTrulSGwh2XvK22OJdc&_nc_zt=23&_nc_ht=scontent.fbkk3-3.fna&_nc_gid=iOuORq54XR5sCsS10MZ2dA&oh=00_AfVjJ08PmIe4bPgdtLGghWtF4GCrzE56PQQ6c2WLz7473w&oe=68B0E4DD"><h3>การแข่งกีฬาต้านยาเศพติด วิทยาลัยเทคโนโลยีภูเขียว(พีเทค)    ประจำปีการศึกษา2568</h3><p></p></div>
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/06/511273236_721663587489830_419290221415466550_n-930x620.jpg"><h3>โครงการประกวด ดาว เดือน ดาวเทียม วิทยาลัยเทคโนโลยีภูเขียว(พีเทค)ประจำปีการศึกษา2568</h3><p></p></div>
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/05/500535520_703751469205646_82182015737436578_n.jpg"><h3>การจัดเลือกตั้ง นายกองค์การวิชาชีพในอนาคตแห่งประเทศไทย (อวท.) ประจำปีการศึกษา 2568</h3><p></p></div>
+  </div>
+</section>
+<div class="content">
+  <a href="index1.html" class="back-btn">← กลับสู่หน้าแรก</a>
+</div>
+
+</body>
+</html>
