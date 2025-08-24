@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>โรงเรียนตัวอย่าง - Single Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    .logo {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .logo-title {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* ระยะห่างระหว่างโลโก้กับชื่อ */
+}
+
+.logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 50%; /* ถ้าอยากให้โลโก้เป็นวงกลม */
+}
+
+/* Reset & Body */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Kanit',sans-serif;background:#f0f4f8;color:#333;line-height:1.6;scroll-behavior:smooth;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+
+/* Header */
+header{background:#2563eb;color:white;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.2);}
+header h1{font-size:1.8rem;}
+header nav a{color:white;margin-left:20px;font-weight:600;transition:0.3s;}
+header nav a:hover{color:#facc15;}
+
+/* Sections */
+section{padding:80px 20px;max-width:1200px;margin:auto;}
+h2.section-title{text-align:center;font-size:2rem;margin-bottom:40px;color:#2563eb;position:relative;}
+h2.section-title::after{content:'';display:block;width:80px;height:4px;background:#facc15;margin:10px auto 0;border-radius:2px;}
+
+/* Slider */
+.slider-container{position:relative;height:450px;max-width:100%;margin:auto;overflow:hidden;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+.slide{position:absolute;width:100%;height:100%;opacity:0;transition:opacity 1s ease;}
+.slide.active{opacity:1;}
+.slide img{width:100%;height:100%;object-fit:cover;}
+.slide-text{position:absolute;bottom:40px;left:40px;background:rgba(0,0,0,0.5);color:white;padding:20px;border-radius:10px;}
+.slide-text h2{font-size:2rem;margin-bottom:10px;}
+.slide-text p{font-size:1.2rem;}
+.prev,.next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:white;border:none;font-size:2rem;padding:10px 15px;cursor:pointer;border-radius:5px;}
+.prev{left:20px;} .next{right:20px;}
+.prev:hover,.next:hover{background:rgba(0,0,0,0.7);}
+
+/* Cards */
+.courses,.news,.activities{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;}
+.card{background:white;padding:20px;border-radius:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s, box-shadow 0.3s;cursor:pointer;}
+.card:hover{transform:translateY(-5px);box-shadow:0 6px 16px rgba(0,0,0,0.2);}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:15px;}
+.card h3{margin-bottom:10px;color:#2563eb;}
+.card p{color:#555;}
+
+/* Forms */
+form{max-width:500px;margin:auto;display:flex;flex-direction:column;background:white;padding:30px;border-radius:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+input,textarea,select{padding:12px;margin-bottom:15px;border-radius:10px;border:1px solid #ccc;font-size:1rem;transition:0.3s;}
+input:focus,textarea:focus,select:focus{border-color:#2563eb;outline:none;}
+button{padding:12px;border:none;background:#2563eb;color:white;font-weight:bold;border-radius:10px;cursor:pointer;transition:0.3s;}
+button:hover{background:#1e40af;}
+
+/* Footer */
+footer{background:#2563eb;color:white;text-align:center;padding:25px;margin-top:40px;}
+
+/* Responsive */
+@media(max-width:768px){
+  .slide-text{left:20px;bottom:20px;padding:15px;}
+  .slide-text h2{font-size:1.5rem;}
+  .slide-text p{font-size:1rem;}
+  header{flex-direction:column;align-items:flex-start;}
+  header nav{margin-top:10px;}
+  header nav a{margin-left:0;margin-right:15px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-title">
+    <img src="https://ptech-pk.ac.th/wp-content/uploads/2025/05/cropped-cropped-469098854_543441861893657_8760232005690327911_n.jpg" alt="โลโก้โรงเรียน" class="logo-img">
+    <h1>วิทยาลัยเทคโนโลยีภูเขียว</h1>
+  </div>
+  <nav>
+    <a href="#banner">หน้าแรก</a>
+    <a href="#about">เกี่ยวกับเรา</a>
+    <a href="#courses">หลักสูตร</a>
+    <a href="#news">ข่าวสาร</a>
+    <a href="#activities">กิจกรรม</a>
+    <a href="#contact">ติดต่อเรา</a>
+  </nav>
+</header>
+
+<!-- Slider -->
+ 
+<section id="banner">
+  <div class="slider-container">
+    <div class="slide active">
+      <img src="https://scontent.fbkk3-4.fna.fbcdn.net/v/t39.30808-6/462477278_530329139881214_6348536821975336549_n.png?stp=dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=k8sgzDqLBTMQ7kNvwGrIs5d&_nc_oc=AdkFARVMvDAXu3QK4Tcld20y-0hiT0p9__m0SwFaRXWhfgiYoZDXY_BGfv7ztqCDr4M&_nc_zt=23&_nc_ht=scontent.fbkk3-4.fna&_nc_gid=K5OWrHDCyT7sPS0fXkMW1A&oh=00_AfUjPJHNrQk0EI6poHKDZ-a5gLBuIvNaxfN6ybeUazV4kQ&oe=68B0EE86" alt="Slide 1">
+      <div class="slide-text"><h2>ยินดีต้อนรับสู่โรงเรียนตัวอย่าง</h2><p>สร้างนักเรียนคุณภาพ คู่คุณธรรม</p></div>
+    </div>
+    <div class="slide">
+      <img src="https://lh5.googleusercontent.com/87ZVHgZBWCud6D21hkWP9BZ7DYuVCmWerFgfhuNH0BlZbtaA0SqOe7E8lOCUVG6040aqhjib3lSIj1BsiyRPSqZ0iaKcKWUSFnSzsVE5VHkFIIAmWehTcTp5GQTskq5C-ne3AKc71-nmVp6ydLkVthtssfKwuWfoSdV6a2DIQT7Oq8oE0vTPXg=w1280" alt="Slide 2">
+      <div class="slide-text"><h2>กิจกรรมส่งเสริมการเรียนรู้</h2><p>เรียนรู้สนุกสนาน ทั้งวิชาการ กีฬา และศิลปะ</p></div>
+    </div>
+    <div class="slide">
+      <img src="https://ptech-pk.ac.th/wp-content/uploads/2025/06/503934716_707843195463140_2607958557995059122_n-930x620.jpg" alt="Slide 3">
+      <div class="slide-text"><h2>ความสำเร็จของนักเรียน</h2><p>เราภูมิใจในผลงานของนักเรียนทุกคน</p></div>
+    </div>
+    <button class="prev" onclick="prevSlide()">‹</button>
+    <button class="next" onclick="nextSlide()">›</button>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <h2 class="section-title">เกี่ยวกับเรา</h2>
+  <p>วิทยาลัยเทคโนโลยีภูเขียว
+
+นักเรียนนักศึกษา ประมาณ 1000-1500 คน  บุคลากร 40 คน
+
+เปิดสอนในระดับ ประกาศนียบัตรวิชาชีพ (ปวช.) ประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)
+
+รายละเอียด
+
+ระดับ ประกาศนียบัตรวิชาชีพ (ปวช.)  จะทำการเรียนการสอนในวิทยาลัย 2ปี(4เทอม)เเละเมื่อเข้าปีที่ 3 ทางวิทยาลัยจะไห้นักศึกษาออกฝึกประสบการณ์เป็นเวลา1ปี การเรียนระดับ ปวช จะเรียน2ปีฝึกประสบกาณ์1ปีรวม3ปี
+
+ระดับประกาศนียบัตรวิชาชีพชั้นสูง(ปวส.) จะทำการเรียนการสอนในวิทยาลัย1ปี(2เทมอ) เมื่อเข้าปีที่2 ทางวิทยาลัยจะให้นักศึกษา ออกฝึกประสบการณ์1ปี (ปวส.) จะเรียน1ปี และออกฝึกประสบการณ์ 1 ปี รวมเป็น2 ปี
+
+หากต้องการรายละเอียดที่มากกว่านี้สามารถติดต่อสอบถามได้สลอดเวลาครับ/คะ</p>
+</section>
+
+<!-- Courses -->
+<section id="courses">
+  <h2 class="section-title">หลักสูตรของเรา</h2>
+  <div class="courses">
+    <div class="card"><h3>ประกาศนียบัตรวิชาชีพ(ปวช.)</h3><p>หลักสูตร3ปีรับสมัครผู้จบม.3</p></div>
+    <div class="card"><h3>ประกาศนียบัตรวิชาชีพชั้นสูง(ปวส.)</h3><p>หลักสูตร2ปีรับสมัครผู้จบ ปวช. ม.6หรือเทียบเท่าเข้าศึกษาต่อ</p></div>
+</section>
+
+<!-- News -->
+<section id="news">
+  <h2 class="section-title">ข่าวสาร</h2>
+  <div class="news">
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/06/512661788_725232160390910_43833165661102047_n-930x620.jpg"><h3>กิจกรรมบริจาคโลหิต ต่อชีวิตเพื่อนมนุษย์ วิทยาลัยเทคโนโลยีภูเขียว(พี-เทค)</h3><p>27/06/2025</p></div>
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/06/511273236_721663587489830_419290221415466550_n-930x620.jpg"><h3>โครงการประกวด ดาว เดือน ดาวเทียม วิทยาลัยเทคโนโลยีภูเขียว(พีเทค)ประจำปีการศึกษา2568</h3><p>26/06/2025</p></div>
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/06/503934716_707843195463140_2607958557995059122_n-930x620.jpg"><h3>กิจกรรมวันเฉลิมพระเกียรติสมเด็จพระนางเจ้าๆพระบรมราชินีเนื่องในโอกาสวันเฉลิมพระชนมพรรษา 2568</h3><p>10/06/2025</p></div>
+  </div>
+    <div style="text-align:center; margin-top:30px;">
+    <a href="activity1.html">
+      <button style="padding:12px 25px; background:#2563eb; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer;">ดูข่าวทั้งหมด</button>
+    </a>
+  </div>
+</section>
+
+<!-- Activities -->
+<section id="activities">
+  <h2 class="section-title">กิจกรรมและแกลเลอรี่</h2>
+  <div class="activities">
+    <a href="gallery.html">
+    <div class="card"><img src="https://scontent.fbkk3-3.fna.fbcdn.net/v/t39.30808-6/532208549_764818449765614_1564806399104870166_n.jpg?stp=dst-jpg_p526x395_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=QkjlBpP5XPAQ7kNvwGDjwlx&_nc_oc=AdkQJkG5AyuIf-F072uqWC33KFHK6bjPjHrp0ixKyAZ0l8CIzTrulSGwh2XvK22OJdc&_nc_zt=23&_nc_ht=scontent.fbkk3-3.fna&_nc_gid=iOuORq54XR5sCsS10MZ2dA&oh=00_AfVjJ08PmIe4bPgdtLGghWtF4GCrzE56PQQ6c2WLz7473w&oe=68B0E4DD"><h3>การแข่งกีฬาต้านยาเศพติด วิทยาลัยเทคโนโลยีภูเขียว(พีเทค)    ประจำปีการศึกษา2568</h3><p></p></div>
+    </a>
+    <a href="gallery.html">
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/06/511273236_721663587489830_419290221415466550_n-930x620.jpg"><h3>โครงการประกวด ดาว เดือน ดาวเทียม วิทยาลัยเทคโนโลยีภูเขียว(พีเทค)ประจำปีการศึกษา2568</h3><p></p></div>
+    </a>
+    <a href="gallery.html">
+    <div class="card"><img src="https://ptech-pk.ac.th/wp-content/uploads/2025/05/500535520_703751469205646_82182015737436578_n.jpg"><h3>การจัดเลือกตั้ง นายกองค์การวิชาชีพในอนาคตแห่งประเทศไทย (อวท.) ประจำปีการศึกษา 2568</h3><p></p></div>
+    </a>
+  </div>
+  <div style="text-align:center; margin-top:30px;">
+    <a href="gallery.html">
+      <button style="padding:12px 25px; background:#2563eb; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer;">ดูภาพกิจกรรมทั้งหมด</button>
+    </a>
+  </div>
+</section>
+
+
+<!-- Enrollment -->
+
+
+<!-- Contact -->
+<section id="contact">
+  <h2 class="section-title">ติดต่อเรา</h2>
+  <form onsubmit="alert('ส่งข้อความเรียบร้อย!'); return false;">
+    <input type="text" placeholder="ชื่อ" required>
+    <input type="email" placeholder="อีเมล" required>
+    <textarea placeholder="ข้อความ" rows="5" required></textarea>
+    <button type="submit">ส่งข้อความ</button>
+  </form>
+  <div style="text-align:center; margin-top:30px;">
+    <a href="index.html">
+      <button style="padding:12px 25px; background:#2563eb; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer;">กลับไปหน้าแรก</button>
+    </a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 วิทยาลัยเทคโนโลยีภูเขียว. ส่งงาน.
+</footer>
+
+<script>
+// Slider JS
+let currentSlide=0;
+const slides=document.querySelectorAll('.slide');
+function showSlide(index){slides.forEach((s,i)=>s.classList.remove('active')); slides[index].classList.add('active');}
+function nextSlide(){currentSlide=(currentSlide+1)%slides.length;showSlide(currentSlide);}
+function prevSlide(){currentSlide=(currentSlide-1+slides.length)%slides.length;showSlide(currentSlide);}
+setInterval(nextSlide,5000);
+</script>
+
+</body>
+</html>

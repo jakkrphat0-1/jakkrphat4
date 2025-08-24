@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>jakkrphat shop</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+    }
+    header {
+      background: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 50;
+    }
+    header h1 {
+      color: #e11d48;
+      margin: 0;
+    }
+    #toggleCartBtn {
+      background: #e11d48;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    #toggleCartBtn:hover {
+      background: #b91c1c;
+    }
+    .container {
+      display: flex;
+    }
+    .main {
+      flex: 1;
+      margin-right: 320px;
+      transition: margin-right 0.3s ease;
+      min-height: 100vh;
+    }
+    .main.fullwidth {
+      margin-right: 0;
+    }
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .categories button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      background: #e5e7eb;
+      transition: background 0.3s, color 0.3s;
+    }
+    .categories button.active {
+      background: #e11d48;
+      color: white;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+    .grid1 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .cart {
+  position: sticky;
+  top: 20px; /* ระยะห่างจากด้านบน */
+  width: 320px;
+  background: white;
+  box-shadow: -2px 0 6px rgba(0,0,0,0.2);
+  padding: 20px;
+  overflow-y: auto;
+  height: fit-content;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cart.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cart:not(.hide) {
+  opacity: 1;
+  visibility: visible;
+}
+#toggleCartBtn {
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+}
+
+    .cart h2 {
+      margin-top: 0;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 8px 0;
+    }
+    .cart-item button {
+      border: none;
+      background: none;
+      color: #e11d48;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+    }
+    .modal-content img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .modal-content button.close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+      transition: color 0.3s;
+    }
+    .modal-content button.close:hover {
+      color: #e11d48;
+    }
+
+    /* Slider */
+    .slider {
+      padding: 20px;
+      background: #fef2f2;
+      text-align: center;
+      max-width: 400px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .slider img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      height: 150px;
+      object-fit: cover;
+    }
+    .slider-controls {
+      margin-top: 10px;
+    }
+    .slider-controls button {
+      background: #e11d48;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .slider-controls button:hover {
+      background: #b91c1c;
+    }
+
+    /* Recommended Products - horizontal scroll */
+    .recommended-section {
+      padding: 20px;
+      background: #fef2f2;
+      max-width: 100%;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .recommended-section .card {
+      display: inline-block;
+      vertical-align: top;
+      width: 180px;
+      margin-right: 15px;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background: white;
+      padding: 10px;
+      transition: transform 0.2s;
+    }
+    .recommended-section .card:hover {
+      transform: scale(1.05);
+    }
+    .recommended-section .card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .main {
+        margin-right: 0 !important;
+      }
+      .cart {
+        position: fixed;
+        width: 100%;
+        height: 300px;
+        bottom: 0;
+        top: auto;
+        transform: translateY(0);
+      }
+      .cart.hide {
+        transform: translateY(100%);
+      }
+      .slider, .recommended-section {
+        max-width: 100%;
+        margin: 20px 0;
+      }
+    }
+    .recommended-section1 {
+      padding: 20px;
+      background: #fef2f2;
+      max-width: 100%;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .recommended-section1 .card {
+      display: inline-block;
+      vertical-align: top;
+      width: 180px;
+      margin-right: 15px;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background: white;
+      padding: 10px;
+      transition: transform 0.2s;
+    }
+    .recommended-section1 .card:hover {
+      transform: scale(1.05);
+    }
+    .recommended-section1 .card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .main {
+    margin-right: 0 !important;
+  }
+  .cart {
+    position: fixed;
+    width: 50%;
+    height: 80%; /* ใช้ 70% ของความสูงหน้าจอ */
+    bottom: 0;
+    top: auto;
+    background: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+  .cart:not(.hide) {
+    transform: translateY(0);
+  }
+  .slider, .recommended-section, .recommended-section1 {
+    max-width: 100%;
+    margin: 20px 0;
+  }
+}
+
+  </style>
+</head>
+<body>
+p<header>
+  <h1>jakkrphat shop</h1>
+  <button id="toggleCartBtn">Toggle Cart</button>
+</header>
+
+<div class="container">
+  <div id="mainContent" class="main">
+    <div class="categories">
+      <button class="active">ทั้งหมด</button>
+      <button>DSLR Cameras</button>
+      <button>Mirrorless Cameras</button>
+      <button>Lenses</button>
+      <button>Accessories</button>
+    </div>
+
+    <div class="slider">
+      <h2>สินค้าราคาพิเศษ</h2>
+      <img id="sliderImage" src="" alt="Special Offer" />
+      <h3 id="sliderName"></h3>
+      <p style="color:#e11d48;font-weight:bold;">
+        ฿<span id="sliderPrice"></span> <span id="sliderDiscount" style="color:gray;font-size:12px;"></span>
+      </p>
+      <button onclick="addSpecialToCart()">Add to Cart</button>
+      <div class="slider-controls">
+        <button onclick="prevSlide()">‹</button>
+        <button onclick="nextSlide()">›</button>
+      </div>
+    </div>
+<div class="recommended-section">
+      <h2>สินค้าแนะนำ</h2>
+      <div id="recommendedGrid"></div>
+    </div>
+    
+      <h2>สินค้า</h2>
+   
+    <div id="productGrid" class="grid"></div>
+    
+  </div>
+</div>
+
+<div id="cart" class="cart hide">
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <div style="font-weight:bold; margin-top:10px;">Total: ฿<span id="cartTotal">0</span></div>
+</div>
+
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal()">×</button>
+    <img id="modalImage" src="" alt="Product" />
+    <h2 id="modalName"></h2>
+    <p id="modalDescription"></p>
+    <ul id="modalSpecs"></ul>
+    <p style="color:#e11d48; font-weight:bold;">฿<span id="modalPrice"></span></p>
+    <button onclick="addSelectedToCart()" style="background:#e11d48; color:white; border:none; padding:10px; border-radius:5px; cursor:pointer; width:100%;">Add to Cart</button>
+  </div>
+</div>
+<div style="text-align:center; margin-top:30px;">
+    <a href="index.html">
+      <button style="padding:12px 25px; background:#c93535; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer;">กลับไปหน้าแรก</button>
+    </a>
+  </div>
+<script>
+const products = [
+  { id: 1, name: 'Canon EOS R8', category: 'Mirrorless Cameras', price: 45000, image: 'https://s7d1.scene7.com/is/image/canon/eos_r8_body_primary?fmt=webp-alpha&hei=800&wid=800', description: 'กล้องมิเรอร์เลสความละเอียดสูง', specs: ['24.2MP Sensor','4K60 Video'] },
+  { id: 2, name: 'Sony A7 IV', category: 'Mirrorless Cameras', price: 78000, image: 'https://4.img-dpreview.com/files/p/E~TS590x0~articles/9494401150/Product-Images/Sony_alpha_7IV_beauty.jpeg', description: 'กล้องฟูลเฟรมคุณภาพสูง', specs: ['33MP Sensor','4K60 Video'] },
+  { id: 3, name: 'Fujifilm X-T5', category: 'Mirrorless Cameras', price: 55000, image: 'https://3.img-dpreview.com/files/p/E~TS940x788~articles/0162052316/Fujifilm_X-T5_beauty_shot.jpeg', description: 'สีสวยและดีไซน์วินเทจ', specs: ['40MP Sensor','6.2K Video'] },
+  { id: 4, name: 'Nikon Z6 II', category: 'DSLR Cameras', price: 60000, image: 'https://images.cdn.us-central1.gcp.commercetools.com/f7c8f2bb-aff1-4581-a826-1ad2527be222/FrontLeft-1659-Z6II--IzgIDCo_.png', description: 'DSLR สำหรับมืออาชีพ', specs: ['24.5MP Sensor','4K Video'] }
+];
+
+const specialOffers = [
+  { id: 5, name: 'Canon EOS R8 Special', price: 42000, image: 'https://s7d1.scene7.com/is/image/canon/eos_r8_body_primary?fmt=webp-alpha&hei=800&wid=800', discount: '7%' },
+  { id: 6, name: 'Sony A7 IV Bundle', price: 75000, image: 'https://images.openai.com/thumbnails/06de3e6926739246e31b7c4a21d803b3.webp', discount: '4%' },
+  { id: 7, name: 'Fujifilm X-S10 Promo', price: 36000, image: 'https://images.openai.com/thumbnails/url/vO4M5nicu1mSUVJSUGylr5-al1xUWVCSmqJbkpRnoJdeXJJYkpmsl5yfq5-Zm5ieWmxfaAuUsXL0S7F0Tw72yDZ3Tyl0K3a38EsqMs2JyDAMS81OcgzK9vYI9CoryA8xzAjIr3IyDNE1DAmudDMtzK2MdE8tSo_PLFcrBgAZJio5', discount: '10%' }
+];
+
+const recommendedProducts = [
+  { id: 8, name: 'Sigma 24-70mm Lens', price: 25000, image: 'https://www.adorama.com/images/Large/SG2470DG2L.jpg', description: 'เลนส์คุณภาพสูงสำหรับกล้อง DSLR', specs: ['24-70mm Zoom', 'f/2.8 Aperture'] },
+  { id: 9, name: 'Manfrotto Tripod', price: 5000, image: 'https://m.media-amazon.com/images/I/51MBmxEOuoL._UF1000%2C1000_QL80_.jpg', description: 'ขาตั้งกล้องคุณภาพเยี่ยม', specs: ['Lightweight', 'Aluminum'] },
+  { id: 10, name: 'Canon Speedlite 600EX', price: 12000, image: 'https://m.media-amazon.com/images/I/615Y4MyXTKL._UF894%2C1000_QL80_.jpg', description: 'แฟลชสำหรับถ่ายภาพมืออาชีพ', specs: ['Guide Number 60', 'Wireless Control'] },
+  { id: 11, name: 'SanDisk 128GB SD Card', price: 1500, image: 'https://images.openai.com/thumbnails/a7dbb6a26c45c39e462acecb7158b366.webp', description: 'การ์ดความจำความเร็วสูง', specs: ['128GB', 'UHS-I'] }
+];
+
+let cart = [];
+let selectedProduct = null;
+let selectedSpecial = 0;
+
+function renderProducts(category = 'ทั้งหมด') {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  const filtered = category === 'ทั้งหมด' ? products : products.filter(p => p.category === category);
+  filtered.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `<img src="${product.image}"><h3>${product.name}</h3><p style="color:#e11d48;font-weight:bold;">฿${product.price.toLocaleString()}</p>`;
+    card.onclick = () => openModal(product);
+    grid.appendChild(card);
+  });
+}
+
+
+function renderRecommended() {
+  const grid = document.getElementById('recommendedGrid');
+  grid.innerHTML = '';
+  recommendedProducts.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.cursor = 'pointer';
+    card.innerHTML = `<img src="${product.image}"><h4>${product.name}</h4><p style="color:#e11d48;font-weight:bold;">฿${product.price.toLocaleString()}</p>`;
+    card.onclick = () => openModal(product);
+    grid.appendChild(card);
+  });
+}
+function openModal(product) {
+  selectedProduct = product;
+  document.getElementById('modalImage').src = product.image;
+  document.getElementById('modalName').textContent = product.name;
+  document.getElementById('modalDescription').textContent = product.description || '';
+  document.getElementById('modalSpecs').innerHTML = product.specs ? product.specs.map(s => `<li>${s}</li>`).join('') : '';
+  document.getElementById('modalPrice').textContent = product.price.toLocaleString();
+  document.getElementById('productModal').style.display = 'flex';
+}
+function closeModal() { document.getElementById('productModal').style.display = 'none'; }
+function addSelectedToCart() { cart.push(selectedProduct); closeModal(); renderCart(); }
+
+function renderCart() {
+  const itemsDiv = document.getElementById('cartItems');
+  itemsDiv.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price;
+    itemsDiv.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>฿${item.price.toLocaleString()}</span><button onclick="removeFromCart(${index})">Remove</button></div>`;
+  });
+  document.getElementById('cartTotal').textContent = total.toLocaleString();
+}
+function removeFromCart(index) { cart.splice(index, 1); renderCart(); }
+
+// Categories
+document.querySelectorAll('.categories button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.categories button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(btn.textContent);
+  };
+});
+
+// Slider
+function renderSlide() {
+  const offer = specialOffers[selectedSpecial];
+  document.getElementById('sliderImage').src = offer.image;
+  document.getElementById('sliderName').textContent = offer.name;
+  document.getElementById('sliderPrice').textContent = offer.price.toLocaleString();
+  document.getElementById('sliderDiscount').textContent = `(${offer.discount} OFF)`;
+}
+function prevSlide() { selectedSpecial = (selectedSpecial - 1 + specialOffers.length) % specialOffers.length; renderSlide(); }
+function nextSlide() { selectedSpecial = (selectedSpecial + 1) % specialOffers.length; renderSlide(); }
+function addSpecialToCart() { cart.push(specialOffers[selectedSpecial]); renderCart(); }
+
+// Auto-slide every 3 sec
+setInterval(nextSlide, 3000);
+
+// Toggle Cart
+const toggleBtn = document.getElementById('toggleCartBtn');
+const cartDiv = document.getElementById('cart');
+const mainDiv = document.getElementById('mainContent');
+
+toggleBtn.addEventListener('click', () => {
+  cartDiv.classList.toggle('hide');
+  if (cartDiv.classList.contains('hide')) {
+    mainDiv.classList.add('fullwidth');  // ถ้าปิด cart -> mainContent เต็มจอ
+  } else {
+    mainDiv.classList.remove('fullwidth'); // ถ้าเปิด cart -> mainContent เว้นที่ 320px
+  }
+});
+
+// Initial render
+renderProducts();
+renderRecommended();
+renderSlide();
+renderCart();
+
+</script>
+</body>
+</html>
